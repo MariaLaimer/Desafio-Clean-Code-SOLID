@@ -1,24 +1,33 @@
+const REGRAS = [
+  {
+    cond: (c, v) => c.tipo === 'premium'&& v > 1000 && c.anosCadastro > 5,
+    valor: v => v * 0.20,
+  },
+  {
+    cond: (c, v) => c.tipo === 'premium' && v > 1000 && c.anosCadastro <= 5,
+    valor: v => v * 0.15,
+  },
+  {
+    cond: (c, v) => c.tipo === 'premium' && v <= 1000 && v > 500,
+    valor: v => v * 0.10,
+  },
+  {
+    cond: (c, v) => c.tipo === 'premium' &&  v <= 500,
+    valor: v => v * 0.05,
+  },
+  {
+    cond: (c, v) => c.tipo === 'gold' &&  v > 1000,
+    valor: v => v * 0.10,
+  },
+  {
+    cond: (c, v) => c.tipo === 'gold' &&  v <= 1000,
+    valor: v => v * 0.02,
+  },
+];
+
 function calcularDesconto(cliente, valor) {
-  if (cliente.tipo === 'premium') {
-    if (valor > 1000) {
-      if (cliente.anosCadastro > 5) {
-        return valor * 0.20;
-      } else {
-        return valor * 0.15;
-      }
-    } else if (valor > 500) {
-      return valor * 0.10;
-    } else {
-      return valor * 0.05;
-    }
-  } else if (cliente.tipo === 'gold') {
-    if (valor > 1000) {
-      return valor * 0.10;
-    } else {
-      return valor * 0.02;
-    }
-  }
-  return 0;
+  const regra = REGRAS.find((r => r.cond(cliente, valor)));
+  return regra ? regra.valor(valor) : 0;
 }
 
 module.exports = calcularDesconto;
