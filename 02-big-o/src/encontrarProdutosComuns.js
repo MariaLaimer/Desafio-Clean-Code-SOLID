@@ -1,16 +1,9 @@
 /**
- * ❌ OTIMIZAÇÃO O(n²) para O(n)
+ * OTIMIZAÇÃO O(n²):Loop Duplo Aninhado --> para O(n): Busca Sequencial.
  */
 function encontrarProdutosComuns(listaA, listaB) {
-  const comuns = [];
-  for (let i = 0; i < listaA.length; i++) {
-    for (let j = 0; j < listaB.length; j++) {
-      if (listaA[i] === listaB[j]) {
-        comuns.push(listaA[i]);
-      }
-    }
-  }
-  return comuns;
+  const operacaoListaB = new Set(listaB);
+  return listaA.filter(i => operacaoListaB.has(i));
 }
 
 module.exports = encontrarProdutosComuns;
